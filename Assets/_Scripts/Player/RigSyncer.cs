@@ -6,6 +6,10 @@ public class RigSyncer : MonoBehaviour
     [SerializeField] private Transform _physicalRigRoot;
     [SerializeField] private Transform _animatedRigRoot;
 
+    [Header("Pelvis Tracking")]
+    [SerializeField] private Transform _physicalPelvis;
+    [SerializeField] private Transform _animatedPelvis;
+
     private ConfigurableJoint[] _joints;
     private Transform[] _animatedBones;
     private Quaternion[] _startRotations;
@@ -29,6 +33,13 @@ public class RigSyncer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Teleport the animated rig
+        if (_physicalPelvis != null && _animatedPelvis != null)
+        {
+            Vector3 pelvisOffset = _animatedPelvis.position - _animatedRigRoot.position;
+            _animatedRigRoot.position = _physicalPelvis.position - pelvisOffset;
+        }
+        
         // Continously feed the Animated Rig's IK angles into the physical rigs joints
         for (int i = 0; i < _joints.Length; i++)
         {

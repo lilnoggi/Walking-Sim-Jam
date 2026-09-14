@@ -9,7 +9,7 @@ public class TorsoStabliser : MonoBehaviour
     [Header("Locomotion")]
     [SerializeField] private Transform _leftFootTarget;
     [SerializeField] private Transform _rightFootTarget;
-    [SerializeField] private float _walkForce = 150f;
+    [SerializeField] private float _walkForce = 400f;
 
     // ------------------------------------------------------
 
