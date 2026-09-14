@@ -29,7 +29,7 @@ public class RigSyncer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Continously feed the Ghost Rig's IK angles into the physical rigs joints
+        // Continously feed the Animated Rig's IK angles into the physical rigs joints
         for (int i = 0; i < _joints.Length; i++)
         {
             if (_animatedBones[i] != null)
@@ -54,7 +54,7 @@ public class RigSyncer : MonoBehaviour
                 return result;
             }
         }
-        
+
         return null;
     }
 }
