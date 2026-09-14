@@ -6,10 +6,12 @@ public class LimbPuppeteer : MonoBehaviour
     [Header("IK Targets")]
     [SerializeField] private Transform _leftFootTarget;
     [SerializeField] private Transform _rightFootTarget;
+    [SerializeField] private Transform _pelvisReference;
 
     [Header("Movement Settings")]
     [SerializeField] private float _legMoveSpeed = 0.05f;
     [SerializeField] private float _legLiftHeight = 0.5f;
+    [SerializeField] private float _maxStepDistance = 1.2f;
 
     private InputSystem_Actions _actions;
 
@@ -25,28 +27,41 @@ public class LimbPuppeteer : MonoBehaviour
         // Read MouseDelta action
         Vector2 mouseDelta = _actions.Legs.MouseDelta.ReadValue<Vector2>();
 
-        // Check if LeftLegDrag or RightLegDrag interactions are pressed
-        if (_actions.Legs.LeftLegDrag.IsPressed())
-        {
-            MoveFoot(_leftFootTarget, mouseDelta);
-        }
-        else if (_actions.Legs.RightLegDrag.IsPressed())
-        {
-            MoveFoot(_rightFootTarget, mouseDelta);
-        }
+        // Call both right and left inputs every frame so the unpressed foot correctly drops to the floor
+        MoveFoot(_leftFootTarget, mouseDelta, _actions.Legs.LeftLegDrag.IsPressed());
+        MoveFoot(_rightFootTarget, mouseDelta, _actions.Legs.RightLegDrag.IsPressed());
     }
 
-    private void MoveFoot(Transform footTarget, Vector2 mouseDelta)
+    private void MoveFoot(Transform footTarget, Vector2 mouseDelta, bool isPressed)
     {
-        // Move forward/backward along Z based on mouse movement
-        footTarget.Translate(new Vector3(0, 0, mouseDelta.y * _legMoveSpeed), Space.World);
-
-        // Hard set the Y position so it doesn't fly 
-        float groundHeight = 0.2f;
-        float lift = Mathf.Abs(mouseDelta.y) > 0.1f ? _legLiftHeight : 0f;
-
         Vector3 newPos = footTarget.position;
-        newPos.y = groundHeight + lift;
+
+        if (isPressed)
+        {
+            // Lift the leg up
+            newPos.y = 0.2f + _legLiftHeight;
+            newPos.x += mouseDelta.x * _legMoveSpeed;
+            newPos.z += mouseDelta.y * _legMoveSpeed;
+
+            // Clamp horizontal distance relative to the pelvis
+            Vector3 hipPos = _pelvisReference.position;
+            hipPos.y = 0.2f; // Flatten to ground level for 2D radius calculation
+
+            Vector3 offset = newPos - hipPos;
+            offset.y = 0; 
+
+            if (offset.magnitude > _maxStepDistance)
+            {
+                offset = Vector3.ClampMagnitude(offset, _maxStepDistance);
+                newPos.x = hipPos.x + offset.x;
+                newPos.z = hipPos.z + offset.z;
+            }
+        }
+        else
+        {
+            // Drop to the floor
+            newPos.y = 0.2f; 
+        }
 
         footTarget.position = newPos;
     }

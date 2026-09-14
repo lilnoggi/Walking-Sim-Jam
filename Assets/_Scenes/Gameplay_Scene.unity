@@ -289,6 +289,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!4 &379246537 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4190619252965990569, guid: 73892bc105e78264ba96bc530d923ac5, type: 3}
+  m_PrefabInstance: {fileID: 846005064477666196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1112,10 @@ PrefabInstance:
       propertyPath: _leftFootTarget
       value: 
       objectReference: {fileID: 775321930}
+    - target: {fileID: 434176270237214102, guid: 73892bc105e78264ba96bc530d923ac5, type: 3}
+      propertyPath: _pelvisReference
+      value: 
+      objectReference: {fileID: 379246537}
     - target: {fileID: 434176270237214102, guid: 73892bc105e78264ba96bc530d923ac5, type: 3}
       propertyPath: _rightFootTarget
       value: 
