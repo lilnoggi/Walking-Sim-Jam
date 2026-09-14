@@ -4,7 +4,7 @@ using UnityEngine;
 public class TorsoStabliser : MonoBehaviour
 {
     [SerializeField] private Rigidbody _torsoRigidbody;
-    [SerializeField] private float _upwardForce = 150f;
+    [SerializeField] private float _upwardForce = 500f;
 
     private void FixedUpdate()
     {

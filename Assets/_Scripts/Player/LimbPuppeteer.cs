@@ -38,12 +38,16 @@ public class LimbPuppeteer : MonoBehaviour
 
     private void MoveFoot(Transform footTarget, Vector2 mouseDelta)
     {
-        // Map Y-axis of MouseDelta to the Z-axis (forward) of the FootTarget
-        Vector3 movement = new Vector3(0, 0, mouseDelta.y * _legMoveSpeed);
+        // Move forward/backward along Z based on mouse movement
+        footTarget.Translate(new Vector3(0, 0, mouseDelta.y * _legMoveSpeed), Space.World);
 
-        // Add an upward arc to the Y-axis so the foot lifts off the ground collider
-        movement.y = _legLiftHeight * (Mathf.Abs(mouseDelta.y) > 0.1f ? 1f : 0f);
+        // Hard set the Y position so it doesn't fly 
+        float groundHeight = 0.2f;
+        float lift = Mathf.Abs(mouseDelta.y) > 0.1f ? _legLiftHeight : 0f;
 
-        footTarget.Translate(movement * Time.deltaTime, Space.World);
+        Vector3 newPos = footTarget.position;
+        newPos.y = groundHeight + lift;
+
+        footTarget.position = newPos;
     }
 }
