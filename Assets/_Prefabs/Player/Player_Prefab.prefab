@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 489360937928779688}
   - component: {fileID: 6590967567319494288}
   - component: {fileID: 4859574070265793128}
+  - component: {fileID: 6830126055812611367}
   m_Layer: 0
   m_Name: Player_Prefab
   m_TagString: Untagged
@@ -200,7 +201,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -222,6 +223,26 @@ MonoBehaviour:
   - m_Rig: {fileID: 7842723639712544881}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &6830126055812611367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4234558662631572803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3032c62bc0801a14ca446b1439f926ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActiveRagdollIK
+  _torsoRigidbody: {fileID: 6884851675021682336}
+  _upwardForce: 500
+  _leftFootTarget: {fileID: 4407340812992593594}
+  _rightFootTarget: {fileID: 6352528547766023775}
+  _rightArmTarget: {fileID: 1228054780354862304}
+  _legMoveSpeed: 0.05
+  _armMoveSpeed: 0.05
+  _legLiftHeight: 0.5
 --- !u!1 &5541329953862706009
 GameObject:
   m_ObjectHideFlags: 0
